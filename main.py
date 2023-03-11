@@ -25,19 +25,22 @@ def import_mm(ads_id):
     chrome_options.add_experimental_option("debuggerAddress", resp["data"]["ws"]["selenium"])
     driver = webdriver.Chrome(chrome_driver, options=chrome_options)
     print(driver.title)
-
+    
+    url = "chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/home.html"   # metamask extension
+    
     try:
-        driver.get("chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/home.html")
+        driver.get(url) 
 
         current_window = driver.current_window_handle
         all_windows = driver.window_handles
         for window in all_windows:
             if window != current_window:
                 driver.switch_to.window(window)
+                time.sleep(1)
                 driver.close()
         driver.switch_to.window(current_window)
 
-        time.sleep(3)
+        time.sleep(1)
 
     except Exception as ex:
         print(f'{ex} in profile {ads_id}')
